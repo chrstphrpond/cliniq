@@ -1,1 +1,109 @@
 @import "tailwindcss";
+
+@theme {
+  /* color — light defaults */
+  --color-bg: #F7F5F0;
+  --color-bg-muted: #EDEAE2;
+  --color-surface: #FFFFFF;
+  --color-border: #E8E4DA;
+  --color-border-strong: #D7D2C5;
+  --color-text: #1F2A24;
+  --color-text-muted: #5C645F;
+  --color-text-subtle: #8A8F88;
+  --color-sage: #7A9B82;
+  --color-sage-deep: #2F4A3A;
+  --color-sage-soft: #E4ECE6;
+  --color-success: #5A8C6F;
+  --color-warning: #C49A4A;
+  --color-danger: #A0463F;
+  --color-info: #6B7F8A;
+
+  /* typography */
+  --font-display: var(--font-display-face), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* type scale (rem) */
+  --text-2xs: 0.75rem;
+  --text-xs: 0.875rem;
+  --text-sm: 1rem;
+  --text-base: 1.125rem;
+  --text-md: 1.25rem;
+  --text-lg: 1.5rem;
+  --text-xl: 1.875rem;
+  --text-2xl: 2.25rem;
+  --text-3xl: 3rem;
+  --text-4xl: 3.75rem;
+
+  /* line-heights */
+  --leading-body: 1.55;
+  --leading-ui: 1.35;
+  --leading-display: 1.05;
+
+  /* spacing 4px grid */
+  --spacing-0_5: 2px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-24: 96px;
+
+  /* radii */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* elevation — warm sage-charcoal */
+  --shadow-e1: 0 1px 0 0 rgba(31, 42, 36, 0.04);
+  --shadow-e2: 0 2px 8px -2px rgba(31, 42, 36, 0.08);
+  --shadow-e3: 0 12px 32px -8px rgba(31, 42, 36, 0.12);
+  --shadow-e4: 0 24px 64px -16px rgba(31, 42, 36, 0.18);
+
+  /* motion */
+  --ease-primary: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-secondary: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-micro: 120ms;
+  --duration-short: 200ms;
+  --duration-medium: 320ms;
+  --duration-long: 480ms;
+}
+
+[data-theme="dark"] {
+  --color-bg: #161B17;
+  --color-bg-muted: #1A211C;
+  --color-surface: #1F2622;
+  --color-border: #2A332D;
+  --color-border-strong: #3A4540;
+  --color-text: #EFE9DB;
+  --color-text-muted: #A8AFA6;
+  --color-text-subtle: #7A8079;
+  --color-sage: #8FB298;
+  --color-sage-deep: #5C8A6E;
+  --color-sage-soft: #243029;
+  --color-success: #7DAE92;
+  --color-warning: #D8B26A;
+  --color-danger: #C16A63;
+  --color-info: #8A9EA9;
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 80ms !important;
+  }
+}
