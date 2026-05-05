@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
 import { Wordmark } from "@/components/ui/wordmark";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
 
 describe("Wordmark", () => {
   it("renders accessible brand name", () => {
