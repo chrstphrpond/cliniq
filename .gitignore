@@ -10,3 +10,4 @@ coverage
 .turbo
 .idea
 .vscode
+tsconfig.tsbuildinfo
