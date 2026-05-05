@@ -2,21 +2,21 @@
 
 @theme {
   /* color — light defaults */
-  --color-bg: #F7F5F0;
-  --color-bg-muted: #EDEAE2;
-  --color-surface: #FFFFFF;
-  --color-border: #E8E4DA;
-  --color-border-strong: #D7D2C5;
-  --color-text: #1F2A24;
-  --color-text-muted: #5C645F;
-  --color-text-subtle: #8A8F88;
-  --color-sage: #7A9B82;
-  --color-sage-deep: #2F4A3A;
-  --color-sage-soft: #E4ECE6;
-  --color-success: #5A8C6F;
-  --color-warning: #C49A4A;
-  --color-danger: #A0463F;
-  --color-info: #6B7F8A;
+  --color-bg: #f7f5f0;
+  --color-bg-muted: #edeae2;
+  --color-surface: #ffffff;
+  --color-border: #e8e4da;
+  --color-border-strong: #d7d2c5;
+  --color-text: #1f2a24;
+  --color-text-muted: #5c645f;
+  --color-text-subtle: #8a8f88;
+  --color-sage: #7a9b82;
+  --color-sage-deep: #2f4a3a;
+  --color-sage-soft: #e4ece6;
+  --color-success: #5a8c6f;
+  --color-warning: #c49a4a;
+  --color-danger: #a0463f;
+  --color-info: #6b7f8a;
 
   /* typography */
   --font-display: var(--font-display-face), ui-sans-serif, system-ui, sans-serif;
@@ -75,21 +75,21 @@
 }
 
 [data-theme="dark"] {
-  --color-bg: #161B17;
-  --color-bg-muted: #1A211C;
-  --color-surface: #1F2622;
-  --color-border: #2A332D;
-  --color-border-strong: #3A4540;
-  --color-text: #EFE9DB;
-  --color-text-muted: #A8AFA6;
-  --color-text-subtle: #7A8079;
-  --color-sage: #8FB298;
-  --color-sage-deep: #5C8A6E;
+  --color-bg: #161b17;
+  --color-bg-muted: #1a211c;
+  --color-surface: #1f2622;
+  --color-border: #2a332d;
+  --color-border-strong: #3a4540;
+  --color-text: #efe9db;
+  --color-text-muted: #a8afa6;
+  --color-text-subtle: #7a8079;
+  --color-sage: #8fb298;
+  --color-sage-deep: #5c8a6e;
   --color-sage-soft: #243029;
-  --color-success: #7DAE92;
-  --color-warning: #D8B26A;
-  --color-danger: #C16A63;
-  --color-info: #8A9EA9;
+  --color-success: #7dae92;
+  --color-warning: #d8b26a;
+  --color-danger: #c16a63;
+  --color-info: #8a9ea9;
 }
 
 html {
@@ -100,8 +100,12 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Per spec §3.5: prefers-reduced-motion zeroes animations and clamps */
+/* transitions to 80ms (a calm fade), not 0, to preserve continuity. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 80ms !important;
