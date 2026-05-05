@@ -16,5 +16,31 @@
   "engines": {
     "node": ">=20.11"
   },
-  "packageManager": "pnpm@9.12.0"
+  "packageManager": "pnpm@9.12.0",
+  "dependencies": {
+    "class-variance-authority": "^0.7",
+    "clsx": "^2",
+    "lucide-react": "^0.454",
+    "motion": "^11",
+    "next": "^16",
+    "react": "^19",
+    "react-dom": "^19",
+    "tailwind-merge": "^2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9",
+    "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6",
+    "@testing-library/react": "^16",
+    "@testing-library/user-event": "^14",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitest/ui": "^2",
+    "jsdom": "^25",
+    "postcss": "^8",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^2"
+  }
 }
