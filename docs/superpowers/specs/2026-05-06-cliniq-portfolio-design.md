@@ -1,9 +1,9 @@
 # Cliniq — Dental Clinic SaaS (Portfolio Showcase)
 
 **Spec date:** 2026-05-06
-**Author:** Christopher (with Claude)
+**Author:** Christopher
 **Status:** Draft for review
-**Reference:** Replicates the patient-reservation flow from Bagus Fikri's "Zendenta" UI design study (the source `.mp4` lives in this repo's root) under an original brand and a real, deployable full-stack implementation.
+**Reference:** Adapted from Bagus Fikri's Zendenta UI study, rebuilt under an original brand as a real, deployable full-stack implementation.
 
 ---
 
@@ -20,7 +20,7 @@ The piece is built to be **shippable and demo-able**, not feature-complete as a 
 
 ### 1.1 Primary goals
 
-1. Visually replicate the major Zendenta screens under the Cliniq brand with realistic seed data.
+1. Visually replicate the major reference screens under the Cliniq brand with realistic seed data.
 2. Make a focused subset of features (Reservations, Patients, Treatments, Billing) actually work end-to-end with real CRUD, auth, and DB persistence.
 3. Ship a marketing site (landing, pricing, sign-up) with the same brand language.
 4. Deploy to a public URL with a one-click "Try the demo" entry point.
@@ -376,7 +376,7 @@ The project is "done" for portfolio purposes when:
 1. ✅ A public URL serves the marketing site at AA accessibility and Lighthouse ≥ 90.
 2. ✅ "Try the demo" lands a recruiter inside a working `/app/dashboard` in under 5 seconds with no sign-up friction.
 3. ✅ The recruiter can book an appointment, register a patient, log a dental chart entry, complete a treatment-plan visit, and generate + mark-paid an invoice — all touching real DB rows scoped by RLS.
-4. ✅ All Zendenta sidebar parities (Dashboard, Reservations, Patients, Treatments, Staff, Sales, Purchases, Payment Method, Stocks, Peripherals, Reports, Support) render with realistic data; the working subset behaves correctly.
+4. ✅ All reference sidebar parities (Dashboard, Reservations, Patients, Treatments, Staff, Sales, Purchases, Payment Method, Stocks, Peripherals, Reports, Support) render with realistic data; the working subset behaves correctly.
 5. ✅ Repo includes a polished `README.md` with screenshots, a 60-second loom-style GIF, an architecture diagram, and a documented "what's real vs what's seeded" matrix.
 6. ✅ Test suite green; CI green; no `TODO` or `FIXME` left in shipped code paths.
 
@@ -404,5 +404,4 @@ The project is "done" for portfolio purposes when:
 
 ## 15. Source material
 
-- `Bagus_Fikri_-_SaaS_Designer_-_Checking_patient_reservation_OwUEWz.mp4` (in repo root) — the Zendenta UI study this project visually references.
-- `frames/` — 70 deduplicated keyframes extracted from the video for design reference.
+Reference footage and keyframes are kept locally and are not part of this repository.
