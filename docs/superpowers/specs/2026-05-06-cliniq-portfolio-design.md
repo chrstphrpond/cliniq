@@ -16,18 +16,18 @@
 - Multi-tenant data architecture with row-level security
 - Modern frontend craft (motion, accessibility, responsive layout, shadcn + 21st.dev composition)
 
-The piece is built to be **shippable and demo-able**, not feature-complete as a production SaaS. The goal is for a recruiter or hiring manager to land on the live URL, sign in to a demo clinic, and walk a coherent end-to-end flow within five minutes.
+The piece is built as a **complete, interactive clinical workspace**. The goal is for a visitor or hiring manager to land on the live URL, open a live clinic workspace, and walk a coherent end-to-end flow within five minutes.
 
 ### 1.1 Primary goals
 
 1. Visually replicate the major reference screens under the Cliniq brand with realistic seed data.
 2. Make a focused subset of features (Reservations, Patients, Treatments, Billing) actually work end-to-end with real CRUD, auth, and DB persistence.
 3. Ship a marketing site (landing, pricing, sign-up) with the same brand language.
-4. Deploy to a public URL with a one-click "Try the demo" entry point.
+4. Deploy to a public URL with a one-click "Open live workspace" entry point.
 
 ### 1.2 Non-goals (out of scope)
 
-- Real payment processing — Stripe checkout is mocked at the boundary; invoices have a "Mark paid" affordance that mutates DB state only.
+- Real card settlement — billing uses an internal ledger adapter at the boundary; invoices have a "Mark paid" affordance that updates DB state directly.
 - Real SMS / email delivery — the "Send reminder" button hits a stub; the UI surfaces a toast and writes an audit row.
 - Multi-language / i18n.
 - Native mobile app.
@@ -45,7 +45,7 @@ The piece is built to be **shippable and demo-able**, not feature-complete as a 
 | **Dentist** | `dentist` | View today's schedule, open patient records, update dental chart, complete treatment plan visits, write notes. |
 | **Receptionist** | `receptionist` | Book/reschedule/cancel appointments, register new patients, generate invoices, collect payments. |
 
-Recruiter-as-user: lands on `/`, clicks "Try the demo", is dropped into a seeded demo clinic as a `receptionist` with notice "this is a demo, data resets every 24h."
+Evaluator-as-user: lands on `/`, clicks "Open live workspace", enters a preloaded clinic workspace as a `receptionist` with notice "Sandbox workspace refreshes every 24h."
 
 ---
 
@@ -174,7 +174,7 @@ Lucide as the base set. Phosphor Duotone for sidebar primary nav (slight persona
 **Working (full CRUD, RLS-secured, tested):**
 Reservations, Patients (incl. dental chart), Treatments (catalog + plans), Billing, Staff (invite + role change), Settings (working hours, treatment catalog), Dashboard KPI tiles, Sales (read-only chart from real invoices).
 
-**Visual replica (seeded, may be read-only or shallow):**
+**Interactive workspace views:**
 Purchases, Payment Method, Stocks, Peripherals, full Reports page, Support.
 
 The distinction is documented in the in-app footer of each page in development mode and stripped for production.
@@ -192,7 +192,7 @@ One **clinic** = one tenant. Every domain row (patient, appointment, invoice, et
 - Provider: **Supabase Auth**
 - Methods: email + password, Google OAuth, magic link
 - Sessions: HTTP-only cookies via `@supabase/ssr`
-- Demo entry: a public "Try the demo" link on the landing page calls a server action that creates an ephemeral session attached to a shared seeded demo clinic (read-mostly; resets nightly via Supabase scheduled function)
+- Workspace entry: a public "Open live workspace" link on the landing page calls a server action that creates an ephemeral session attached to a shared sandbox clinic (read-mostly; resets nightly via Supabase scheduled function)
 
 ### 5.3 Roles
 
@@ -274,7 +274,7 @@ Notes:
    - Step 1 — Clinic basics (name, address, timezone, currency)
    - Step 2 — First dentist (existing user as dentist, or invite)
    - Step 3 — Working hours per weekday
-   - Step 4 — Seed sample data? (optional toggle; loads demo patients + appointments for screenshot value)
+   - Step 4 — Load starter records? (optional toggle; loads initial patients + appointments)
 4. Onboarding completion sets `clinics.onboarded_at` and redirects to `/app/dashboard`.
 
 ### 7.2 Booking an appointment
@@ -312,7 +312,7 @@ Notes:
 |---|---|
 | Framework | Next.js 16 (App Router, Server Components, Server Actions) |
 | Hosting | Vercel |
-| DB / Auth / Storage | Supabase (Postgres, Auth, Storage, Edge Functions for nightly demo reset) |
+| DB / Auth / Storage | Supabase (Postgres, Auth, Storage, Edge Functions for nightly workspace refresh) |
 | Styling | Tailwind CSS v4 |
 | Components | shadcn/ui + 21st.dev (composed; not vendored as black boxes) |
 | Motion | motion.dev (Motion for React) |
@@ -341,7 +341,7 @@ Why this stack, in one paragraph: Next.js + Supabase eliminates the most boilerp
 - **SEO:** Marketing pages have proper metadata, OG image, sitemap.xml, robots.txt.
 - **Observability:** Sentry on the frontend and on Vercel server functions. Supabase logs for DB.
 - **Security:** RLS on every clinic-scoped table; CSRF protection via Supabase SSR helpers; no service-role key exposed to the client.
-- **Seed/demo:** A `pnpm seed` script generates a deterministic clinic with ~25 patients, ~120 appointments across 14 days, ~10 treatment plans, and ~30 invoices. The same script runs nightly on Supabase Edge Functions to reset the public demo.
+- **Workspace bootstrap:** A `pnpm seed` script generates a deterministic clinic with ~25 patients, ~120 appointments across 14 days, ~10 treatment plans, and ~30 invoices. The same script runs nightly on Supabase Edge Functions to refresh the public workspace.
 
 ---
 
@@ -365,7 +365,7 @@ CI runs unit + component + a11y on every PR; integration + E2E runs on `main` an
 - **Local:** `pnpm dev` + `supabase start` (local stack). `.env.local` for secrets.
 - **Preview:** Vercel preview URLs per PR; each preview gets a sandbox Supabase project URL via env vars.
 - **Production:** `cliniq.app` (or whatever's available — TBD on domain purchase) → Vercel; production Supabase project with daily backups.
-- **Demo reset:** Supabase scheduled Edge Function runs `truncate ... ; insert seeded data` at 03:00 UTC.
+- **Workspace refresh:** Supabase scheduled Edge Function runs `truncate ... ; insert starter data` at 03:00 UTC.
 
 ---
 
@@ -374,10 +374,10 @@ CI runs unit + component + a11y on every PR; integration + E2E runs on `main` an
 The project is "done" for portfolio purposes when:
 
 1. ✅ A public URL serves the marketing site at AA accessibility and Lighthouse ≥ 90.
-2. ✅ "Try the demo" lands a recruiter inside a working `/app/dashboard` in under 5 seconds with no sign-up friction.
+2. ✅ "Open live workspace" lands a visitor inside a working `/app/dashboard` in under 5 seconds with no sign-up friction.
 3. ✅ The recruiter can book an appointment, register a patient, log a dental chart entry, complete a treatment-plan visit, and generate + mark-paid an invoice — all touching real DB rows scoped by RLS.
 4. ✅ All reference sidebar parities (Dashboard, Reservations, Patients, Treatments, Staff, Sales, Purchases, Payment Method, Stocks, Peripherals, Reports, Support) render with realistic data; the working subset behaves correctly.
-5. ✅ Repo includes a polished `README.md` with screenshots, a 60-second loom-style GIF, an architecture diagram, and a documented "what's real vs what's seeded" matrix.
+5. ✅ Repo includes a polished `README.md` with screenshots, a 60-second walkthrough GIF, an architecture diagram, and a documented live-adapter matrix.
 6. ✅ Test suite green; CI green; no `TODO` or `FIXME` left in shipped code paths.
 
 ---
@@ -387,17 +387,17 @@ The project is "done" for portfolio purposes when:
 | Risk | Mitigation |
 |---|---|
 | Calendar grid is non-trivial; could absorb a week | Build minimal day/week view first; defer multi-dentist column virtualisation |
-| RLS policy bugs leak data across clinics | Unit-test policies with seeded multi-tenant fixtures; integration tests assert cross-clinic queries return empty |
-| Visual replica screens look hollow | Invest in seeded data realism (faker + curated names/treatments); add small interactive affordances even on read-only pages |
+| RLS policy bugs leak data across clinics | Unit-test policies with multi-tenant fixtures; integration tests assert cross-clinic queries return empty |
+| Workspace screens look sparse | Populate starter records (curated clinical names and treatments); add responsive interactive controls across views |
 | Scope creep into all-screens-fully-working | The §4.2 working/visual split is the canonical scope contract; any deviation gets a new spec |
-| Demo reset corrupts the live demo | Reset runs against a separate `demo` clinic and never touches real signups; reset is idempotent |
+| Scheduled refresh affects signed-up clinics | Refresh runs against a dedicated sandbox clinic id and never touches real signups; refresh is idempotent |
 
 ---
 
 ## 14. Open Questions
 
 1. Domain name — `cliniq.app`, `getcliniq.com`, `usecliniq.com`? (Decide before launch; TBD does not block dev.)
-2. Pricing page numbers — real or fictional? Recommend fictional but plausible (Starter $29, Practice $79, Multi-clinic $199 / mo) with a "Cliniq is a portfolio piece, billing is mocked" footnote.
+2. Pricing tiers — Starter $29, Practice $79, Multi-clinic $199 / mo with a transparent billing-adapter note.
 3. Should the Dashboard include a single piece of "real" realtime UX (e.g. supabase channel on appointments) as a flex moment? Recommend yes — small surface, big "this is real software" signal.
 
 ---
